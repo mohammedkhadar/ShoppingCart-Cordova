@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Meta tags -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />-->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <!-- css -->
+        <link rel="stylesheet" href="css/themes/shopKart.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.3.0.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+        <!-- JS library reference-->
+        <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.0.js"></script>
+        <script type="text/javascript" src="js/knockout_2.2.1.js"></script>
+        <script type="text/javascript" src="js/Model.js"></script>
+        <script type="text/javascript" src="js/ViewModel.js"></script>        
+        
+        <title>Shop Kart</title>
+    </head>
+    <body>        
+        <script type="text/javascript" src="cordova-2.5.0.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+        <!-- Home Page-->
+        <div data-role="page" data-theme="a" id="home">            
+            <!-- header -->
+            <div data-role="header" data-position="fixed" data-id="vs_header">                
+                <h1 style="text-transform:none"><b>ShopKart</b></h1>
+                <a href="#shopKart" data-icon="check" style="text-transform:none">Cart</a>                                  
+            </div>  
+            <!-- Content -->
+            <div data-role="content">
+            	<div data-role="collapsible" data-collapsed="false">
+	            	<h2>Product List</h2>   
+	            	<ul data-role="listview" data-inset="true" data-bind="foreach: categories">
+					    <li data-role="list-divider">Category : <span data-bind="text: Type"></span></li>
+					    <!-- ko foreach: $root.products--> 
+					    <!-- ko if: (category() == $parent.Type)-->					    				    	   
+						    <li data-icon="info" >						    	
+						    	<a href='#viewDetails' data-rel="dialog" data-bind="click: $root.selectProduct">
+						    		<span data-bind="text: name" style="text-transform:none"></span>
+						    		<span class="ui-li-count" style="text-transform:none">View Details</span>
+						    	</a>						    	
+						    </li>   						
+						 <!-- /ko -->	
+						 <!-- /ko -->					 
+					</ul>           	         			
+            	</div>            	           	
+            	<a href="#shopKart" data-role="button">View Shopping Cart</a>           	           	            		
+            </div>            
+            <!-- Footer -->
+            <div data-role="footer" data-position="fixed" data-id="vs_header">
+                <h1 style="text-transform:none"><b>ShopKart LLC</b><br/><a href="# style="text-transform:none">www.shopkart.com</a></h1>                              
+            </div>                 
+        </div>	
+        
+        <!--Product Details page --> 
+        <div data-role="page" data-theme="a" id="viewDetails">
+        	<!--Header-->
+	    	<div data-role="header">
+	  			<h1><b>Product Details</b></h1>				  	
+	  		</div>
+	  		<!-- Content-->
+	  		<div data-role="content">
+	  			<div data-bind="with: selectedProduct()">
+	  				<img data-bind="attr:{src: imgUrl}"/>
+	  				<p><b>Product Name :  <span data-bind=" text: name"></span></b></p>
+	  				<p><b>Product Price : Rs.<span data-bind=" text: price"></span></b></p>			  		
+	  				<a href="#" data-role="button" data-rel="back" data-bind="click: $root.addToCart">Add to Cart</a>
+	  				<a href="#" data-role="button" data-rel="back">Cancel</a>
+	  			</div>	
+	  		</div>
+		</div>
+		
+		<!-- Shopping Cart page --> 
+        <div data-role="page" data-theme="a" id="shopKart">
+        	<!--Header-->
+	    	<div data-role="header">
+	  			<h1><b>Shopping Cart</b></h1>
+	  			<a href="#home" data-icon="back" style="text-transform:none">List</a>				  	
+	  		</div>
+	  		<!--Content-->
+	  		<div data-role="content">
+	  			<table>
+	  				<thead>
+	  					<th class="other">Product</th>
+	  					<th class="unit">Units</th>
+	  					<th class="other">Price</th>
+	  					<th class="other">Total Price</th>
+	  					<th class="other"></th>
+	  					<th></th>
+	  				</thead>
+	  				<tbody>
+	  					<!-- ko foreach: cart -->
+	  					<tr>
+					  		<td><span data-bind="text: name"></span></td>
+					  		<td><input type="number" data-bind='value: units, valueUpdate:"afterkeydown"'></input></td>
+					  		<td>Rs.<span data-bind="text: price"></span></td>
+					  		<td>Rs.<span data-bind="text: totalPrice"></span></td>
+					  		<td>
+					  			<!-- ko with:productDetails -->
+					  			<a href="#viewDetails" data-rel="dailog" data-bind="click: $root.selectProduct" style="text-transform:none">Details</a>
+					  			<!-- /ko -->
+					  		</td>
+					  		<td><a href="#" data-bind="click: removeFromCart" style="text-transform:none">Remove</a></td>	
+				  		</tr> 
+				  		<!-- /ko -->
+	  				</tbody>
+	  			</table>
+	  			<br/><div><b>Grand Total : Rs.<span data-bind="text: grandTotal"></span></b></div>
+	  		</div>
+	  		<!--Footer-->
+	    	<div data-role="footer" data-position="fixed" data-id="vs_header">
+                <h1 style="text-transform:none"><b>ShopKart LLC</b><br/><a href="# style="text-transform:none">www.shopkart.com</a></h1>                              
+            </div>    
+		</div>        
+    </body>
+</html>
