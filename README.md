@@ -2,7 +2,7 @@
 
 Cross platform mobile app built using Knockout-Cordova. Source code available under assets/www/.
 
-**Notes:
+**Notes:**
 
 1. PhoneGap - To develop a native solution using web technologies. The same code base can be reused to develop an app on iOS, WP platforms too. .
 2. knockout.js - Develop solution using MVVM design pattern, declarative bindings, observables, templates and to generate loosely coupled code.
